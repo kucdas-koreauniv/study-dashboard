@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 //TEST
 export default defineConfig({
   plugins: [react()],
-  base: "/study-dashboard/"
+  base: "/"
 })
