@@ -1,0 +1,38 @@
+/*// src/components/AttendanceGrid.css*/
+.grid-container {
+    overflow-x: auto;
+}
+
+.grid-container table {
+    border-collapse: collapse;
+    width: max-content;
+}
+
+.grid-container th,
+.grid-container td {
+    width: 45px;
+    padding: 0.30rem;
+    text-align: center;
+}
+
+.name-cell {
+    text-align: left;
+    padding-right: 1rem;
+    white-space: nowrap;
+}
+
+.square {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.attended {
+    background-color: #2ea043; /* green (참여) */
+}
+
+.missed {
+    background-color: #252f36; /* dark gray (미참여) */
+    /*border: 1px solid #30363d;*/
+}
