@@ -2,7 +2,7 @@ name: Deploy static content to GitHub Pages
 
 on:
   push:
-    branches: [master]  # 또는 main 브랜치로 변경 가능
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -17,8 +17,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    # ⬇️ GitHub 환경변수에서 secrets를 가져오기 위해 반드시 필요
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -27,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -36,11 +34,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # ⬇️ VITE_API_TOKEN을 빌드 시점에 사용할 수 있도록 환경변수로 설정
-      - name: Set VITE_API_TOKEN env
-        run: echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" >> $GITHUB_ENV
-
-      - name: Build with Vite
+      - name: Build with VITE_API_TOKEN
         run: npm run build
         env:
           VITE_API_TOKEN: ${{ secrets.VITE_API_TOKEN }}
@@ -48,7 +42,7 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload dist folder
+      - name: Upload dist to artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
