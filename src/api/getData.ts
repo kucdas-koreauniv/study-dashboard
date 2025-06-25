@@ -2,6 +2,7 @@ import type {AttendanceDataMap} from "../types/AttendanceType.ts";
 
 const ENDPOINT = "https://api.github.com/graphql";
 const TOKEN = import.meta.env.VITE_API_TOKEN;
+
 console.log(`TEST TOKEN : ${TOKEN}.`);
 
 export async function getCurrentPRData(): Promise<AttendanceDataMap> {
