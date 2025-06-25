@@ -2,7 +2,7 @@ name: Deploy static content to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [master]  # 또는 main
   workflow_dispatch:
 
 permissions:
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -33,8 +33,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create .env file
-        run: echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" > .env
+      - name: Create .env.production file
+        run: echo "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" > .env.production
 
       - name: Build with Vite
         run: npm run build
@@ -42,7 +42,7 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload dist to artifact
+      - name: Upload dist folder
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
