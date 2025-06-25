@@ -4,6 +4,7 @@ const ENDPOINT = "https://api.github.com/graphql";
 const TOKEN = import.meta.env.VITE_API_TOKEN;
 
 export async function getCurrentPRData(): Promise<AttendanceDataMap> {
+    console.log(`TEST TOKEN : ${TOKEN}`);
     const query = `
     {
       repository(owner: "kucdas-koreauniv", name: "kucdas-algorithm") {
