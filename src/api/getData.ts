@@ -9,7 +9,7 @@ export async function getCurrentPRData(): Promise<AttendanceDataMap> {
     const query = `
     {
       repository(owner: "kucdas-koreauniv", name: "kucdas-algorithm") {
-        pullRequests(first: 5, orderBy: {field: UPDATED_AT, direction: DESC}) {
+        pullRequests(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
           nodes {
             number
             title
