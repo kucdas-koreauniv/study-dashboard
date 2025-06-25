@@ -1,8 +1,8 @@
-name: Deploy static content to Pages
+name: Deploy static content to GitHub Pages
 
 on:
   push:
-    branches: ['master']
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -16,33 +16,33 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: 'npm'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      - name: Build with VITE_API_TOKEN
         env:
           VITE_API_TOKEN: ${{ secrets.VITE_API_TOKEN }}
         run: npm run build
 
-      - name: Configure Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload dist to artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -50,6 +50,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
